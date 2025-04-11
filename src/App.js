@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
+import React from 'react';
+import { StatusBar, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import Home from './screens/Home';
 import Profile from './screens/Profile';
 import Settings from './screens/Settings';
@@ -8,55 +11,77 @@ import Articles from './screens/Articles';
 import Cart from './screens/Cart';
 import Calendar from './screens/Calendar';
 import Chat from './screens/Chat';
-import NavigationBar from './components/NavigationBar';
 import { theme } from './theme';
 
+const Tab = createBottomTabNavigator();
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: theme.colors.white,
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.gray,
+    paddingBottom: 5,
+    paddingTop: 5
+  }
+});
+
 const App = () => {
-  const [activeScreen, setActiveScreen] = useState('home');
-
-  const renderScreen = () => {
-    switch (activeScreen) {
-      case 'home':
-        return <Home />;
-      case 'profile':
-        return <Profile />;
-      case 'notifications':
-        return <Notifications />;
-      case 'settings':
-        return <Settings />;
-      case 'articles':
-        return <Articles />;
-      case 'cart':
-        return <Cart />;
-      case 'calendar':
-        return <Calendar />;
-      case 'chat':
-        return <Chat />;
-      default:
-        return <Home />;
-    }
-  };
-  };
-
   return (
-    <SafeAreaView style={styles.container}>
+    <NavigationContainer>
       <StatusBar
         barStyle="dark-content"
         backgroundColor={theme.colors.white}
       />
-      {renderScreen()}
-      <NavigationBar
-        activeTab={activeScreen}
-        onTabPress={setActiveScreen}
-      />
-    </SafeAreaView>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: styles.tabBar,
+          tabBarActiveTintColor: theme.colors.primary,
+          tabBarInactiveTintColor: theme.colors.gray,
+          tabBarLabelStyle: {
+            fontSize: 12,
+            marginBottom: 3
+          }
+        }}
+      >
+        <Tab.Screen 
+          name="Home" 
+          component={Home}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="home-outline" size={size} color={color} />
+            )
+          }}
+        />
+        <Tab.Screen 
+          name="Profile" 
+          component={Profile}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="person-outline" size={size} color={color} />
+            )
+          }}
+        />
+        <Tab.Screen 
+          name="Notifications" 
+          component={Notifications}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="notifications-outline" size={size} color={color} />
+            )
+          }}
+        />
+        <Tab.Screen 
+          name="Settings" 
+          component={Settings}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="settings-outline" size={size} color={color} />
+            )
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.white
-  }
-});
-
+};
 export default App;

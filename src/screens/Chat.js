@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { theme } from '../theme';
 import Input from '../components/Input';
-import GradientCard from '../components/GradientCard';
 
 const Chat = () => {
   const [message, setMessage] = useState('');
@@ -55,7 +55,10 @@ const Chat = () => {
         ]}
       >
         {!isUser && <Image source={{ uri: msg.avatar }} style={styles.avatar} />}
-        <GradientCard
+        <LinearGradient
+          colors={isUser ? [theme.colors.primary, theme.colors.secondary] : [theme.colors.gray[100], theme.colors.gray[200]]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
           style={[
             styles.messageCard,
             isUser ? styles.userMessageCard : styles.agentMessageCard
@@ -63,7 +66,7 @@ const Chat = () => {
         >
           <Text style={styles.messageText}>{msg.text}</Text>
           <Text style={styles.timestamp}>{msg.timestamp}</Text>
-        </GradientCard>
+        </LinearGradient>
         {isUser && <Image source={{ uri: msg.avatar }} style={styles.avatar} />}
       </View>
     );
@@ -136,10 +139,12 @@ const styles = StyleSheet.create({
     padding: theme.spacing.md
   },
   userMessageCard: {
-    backgroundColor: theme.colors.primary
+    borderRadius: theme.borderRadius.lg,
+    overflow: 'hidden'
   },
   agentMessageCard: {
-    backgroundColor: theme.colors.gray[100]
+    borderRadius: theme.borderRadius.lg,
+    overflow: 'hidden'
   },
   messageText: {
     ...theme.typography.body1,
@@ -166,7 +171,8 @@ const styles = StyleSheet.create({
     marginLeft: theme.spacing.md,
     paddingHorizontal: theme.spacing.lg,
     justifyContent: 'center',
-    backgroundColor: theme.colors.primary,
+    borderRadius: theme.borderRadius.lg,
+    overflow: 'hidden',
     borderRadius: theme.borderRadius.md
   },
   sendButtonText: {
