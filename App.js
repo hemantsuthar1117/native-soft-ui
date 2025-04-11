@@ -1,17 +1,13 @@
 import React from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
+import { View, StatusBar, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import Home from './screens/Home';
-import Profile from './screens/Profile';
-import Settings from './screens/Settings';
-import Notifications from './screens/Notifications';
-import Articles from './screens/Articles';
-import Cart from './screens/Cart';
-import Calendar from './screens/Calendar';
-import Chat from './screens/Chat';
-import { theme } from './theme';
+import { Ionicons } from '@expo/vector-icons';
+import Home from './src/screens/Home';
+import Profile from './src/screens/Profile';
+import Settings from './src/screens/Settings';
+import Notifications from './src/screens/Notifications';
+import { theme } from './src/theme';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,24 +21,25 @@ const styles = StyleSheet.create({
   }
 });
 
-const App = () => {
+export default function App() {
   return (
     <NavigationContainer>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={theme.colors.white}
-      />
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarStyle: styles.tabBar,
-          tabBarActiveTintColor: theme.colors.primary,
-          tabBarInactiveTintColor: theme.colors.gray,
-          tabBarLabelStyle: {
-            fontSize: 12,
-            marginBottom: 3
-          }
-        }}
+      <View style={{ flex: 1 }}>
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor={theme.colors.white}
+        />
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarStyle: styles.tabBar,
+            tabBarActiveTintColor: theme.colors.primary,
+            tabBarInactiveTintColor: theme.colors.gray,
+            tabBarLabelStyle: {
+              fontSize: 12,
+              marginBottom: 3
+            }
+          }}
       >
         <Tab.Screen 
           name="Home" 
@@ -80,8 +77,8 @@ const App = () => {
             )
           }}
         />
-      </Tab.Navigator>
+        </Tab.Navigator>
+      </View>
     </NavigationContainer>
   );
 };
-export default App;
