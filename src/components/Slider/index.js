@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Animated, PanResponder } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { theme } from '../../theme';
 
 const Slider = ({
